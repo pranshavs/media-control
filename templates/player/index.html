@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote System Media Controls</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .controls-container {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .info-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .volume-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .btn-primary {
+            background-color: #007bff; color: white;
+        }
+        .btn-success {
+            background-color: #28a745; color: white;
+        }
+        .btn-danger {
+            background-color: #dc3545; color: white;
+        }
+        .btn-secondary {
+            background-color: #6c757d; color: white;
+        }
+        .btn-warning {
+            background-color: #ffc107; color: black;
+        }
+        .btn-info {
+            background-color: #17a2b8; color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .messages {
+            margin-bottom: 20px;
+        }
+        .message {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        .message.success { 
+            background-color: #d4edda; 
+            color: #155724; 
+            border: 1px solid #28a745;
+        }
+        .message.error { 
+            background-color: #f8d7da; 
+            color: #721c24; 
+            border: 1px solid #dc3545;
+        }
+        .message.info { 
+            background-color: #d1ecf1; 
+            color: #0c5460; 
+            border: 1px solid #17a2b8;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls-container">
+        <h1>{{ title }}</h1>
+        <p class="description">{{ description }}</p>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="info-section">
+            <div class="section-title">Playback Controls</div>
+            <div class="controls-grid">
+                <form method="post" action="{% url 'player:previous' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">⏮️ Prev</button>
+                </form>
+                
+                <form method="post" action="{% url 'player:play_pause' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">⏯️ Play/Pause</button>
+                </form>
+                
+                <form method="post" action="{% url 'player:next' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">⏭️ Next</button>
+                </form>
+                
+                <form method="post" action="{% url 'player:stop' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">⏹️ Stop</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="section-title">Volume Controls</div>
+            <div class="volume-controls">
+                <form method="post" action="{% url 'player:volume_down' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">🔉 Volume Down</button>
+                </form>
+                
+                <form method="post" action="{% url 'player:mute' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning">🔇 Mute/Unmute</button>
+                </form>
+                
+                <form method="post" action="{% url 'player:volume_up' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info">🔊 Volume Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
