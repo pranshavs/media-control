@@ -70,27 +70,3 @@ python manage.py runserver yourIPaddress:8000
 http://127.0.0.1:8000 on your local device
 or
 http://yourIPaddress:8000 remotely on another device
-
-
-Project Structure:
-
-media_control_app/
-├── manage.py
-├── requirements.txt
-├── media_player_project/
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── player/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   └── migrations/
-│       └── __init__.py
-├── templates/
-    └── player/
-        └── index.html
